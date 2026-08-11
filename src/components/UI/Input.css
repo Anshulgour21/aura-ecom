@@ -1,0 +1,44 @@
+@layer components {
+  .ui-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    width: 100%;
+  }
+
+  .ui-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+  }
+
+  .ui-input {
+    width: 100%;
+    padding: 1em 0;
+    border: none;
+    border-bottom: 1px solid rgba(23, 22, 22, 0.2);
+    background: transparent;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+  }
+
+  .ui-input:focus {
+    border-bottom-color: var(--color-primary);
+  }
+
+  .ui-input-error {
+    border-bottom-color: #D32F2F;
+  }
+
+  .ui-error-text {
+    font-size: 0.75rem;
+    color: #D32F2F;
+    margin-top: var(--spacing-1);
+  }
+}

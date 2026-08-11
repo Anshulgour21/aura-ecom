@@ -1,0 +1,39 @@
+@layer components {
+  .sticky-action-bar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .sticky-action-bar {
+      display: block;
+      position: fixed;
+      bottom: env(safe-area-inset-bottom, 0); /* Above mobile bottom nav */
+      left: 0;
+      width: 100%;
+      background: var(--color-bg);
+      border-top: 1px solid rgba(23, 22, 22, 0.1);
+      padding: var(--spacing-4) var(--spacing-4);
+      z-index: 800; /* Below bottom nav (900) */
+      /* Add margin bottom to push it above the BottomNav */
+      margin-bottom: 70px;
+    }
+
+    .sticky-action-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-4);
+    }
+
+    .sticky-price {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--color-primary);
+    }
+
+    .sticky-btn {
+      flex: 1;
+      margin: 0;
+    }
+  }
+}

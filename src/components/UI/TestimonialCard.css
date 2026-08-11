@@ -1,0 +1,27 @@
+@layer components {
+  .ui-testimonial-card {
+    background: var(--color-white);
+    padding: var(--spacing-8);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .ui-testimonial-card .story-quote {
+    font-size: 1.25rem;
+    font-family: var(--font-heading);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-8);
+    color: var(--color-primary);
+  }
+
+  .ui-testimonial-card .story-author {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(46, 43, 40, 0.6);
+  }
+}

@@ -1,0 +1,53 @@
+@layer components {
+  .ui-modal-portal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4);
+  }
+
+  .ui-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(23, 22, 22, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1;
+  }
+
+  .ui-modal-content {
+    position: relative;
+    z-index: 2;
+    background: var(--color-bg);
+    width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+
+  .ui-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-6);
+    border-bottom: 1px solid rgba(23, 22, 22, 0.05);
+  }
+
+  .ui-modal-title {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ui-modal-body {
+    padding: var(--spacing-6);
+    overflow-y: auto;
+  }
+}
