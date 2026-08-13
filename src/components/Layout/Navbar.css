@@ -8,6 +8,7 @@
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   background: transparent;
   border-bottom: 1px solid transparent;
+  color: var(--color-white);
 }
 
 .navbar.scrolled {
@@ -17,6 +18,7 @@
   padding-block: var(--spacing-3);
   border-bottom: 1px solid rgba(23, 22, 22, 0.05);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+  color: var(--color-primary);
 }
 
 .navbar-container {
@@ -78,7 +80,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   position: relative;
-  color: var(--color-primary);
+  color: inherit;
   text-decoration: none;
 }
 
@@ -89,7 +91,7 @@
   left: 0;
   width: 0%;
   height: 1px;
-  background-color: var(--color-primary);
+  background-color: currentColor;
   transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: left;
 }

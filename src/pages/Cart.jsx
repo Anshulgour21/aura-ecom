@@ -1,11 +1,33 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Trash2, Minus, Plus } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingBag } from 'lucide-react';
+import { useStore } from '../context/StoreContext';
+import EmptyState from '../components/ui/EmptyState';
 import './Cart.css';
 
-import braceletImg from '../assets/bracelet.png';
-
 export default function Cart() {
+  const { cart, removeFromCart, updateCartQuantity } = useStore();
+
+  const getNumericPrice = (priceStr) => {
+    return parseFloat(priceStr.replace(/[^\d.-]/g, ''));
+  };
+
+  const subtotal = cart.reduce((total, item) => total + (getNumericPrice(item.price) * item.quantity), 0);
+
+  if (cart.length === 0) {
+    return (
+      <div className="cart-page container page-section" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <EmptyState 
+          icon={ShoppingBag}
+          title="Your bag is empty"
+          description="Looks like you haven't added anything to your bag yet."
+          actionText="Continue Shopping"
+          onAction={() => window.location.href = '/shop'}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="cart-page container page-section">
       <header className="cart-header">
@@ -26,34 +48,42 @@ export default function Cart() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="cart-items">
-          <div className="cart-item">
-            <Link to="/product/2" className="cart-item-img">
-              <img src={braceletImg} alt="Bracelet" />
-            </Link>
-            <div className="cart-item-details">
-              <div className="cart-item-header">
-                <h3 className="cart-item-name"><Link to="/product/2">Ethereal Chain Bracelet</Link></h3>
-                <button className="icon-button remove-btn" aria-label="Remove item"><Trash2 size={16} strokeWidth={1.5} /></button>
-              </div>
-              <p className="cart-item-variant">18k Solid Gold</p>
-              
-              <div className="cart-item-actions">
-                <div className="quantity-selector small">
-                  <button aria-label="Decrease quantity"><Minus size={14} /></button>
-                  <span>1</span>
-                  <button aria-label="Increase quantity"><Plus size={14} /></button>
+          {cart.map((item) => (
+            <div className="cart-item" key={item.id}>
+              <Link to={`/product/${item.id}`} className="cart-item-img">
+                <img src={item.img1} alt={item.name} />
+              </Link>
+              <div className="cart-item-details">
+                <div className="cart-item-header">
+                  <h3 className="cart-item-name"><Link to={`/product/${item.id}`}>{item.name}</Link></h3>
+                  <button className="icon-button remove-btn" aria-label="Remove item" onClick={() => removeFromCart(item.id)}>
+                    <Trash2 size={16} strokeWidth={1.5} />
+                  </button>
                 </div>
-                <p className="price">$890</p>
+                <p className="cart-item-variant">Default</p>
+                
+                <div className="cart-item-actions">
+                  <div className="quantity-selector small">
+                    <button aria-label="Decrease quantity" onClick={() => updateCartQuantity(item.id, item.quantity - 1)}>
+                      <Minus size={14} />
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button aria-label="Increase quantity" onClick={() => updateCartQuantity(item.id, item.quantity + 1)}>
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                  <p className="price">{item.price}</p>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
         <div className="cart-summary">
           <h2>Order Summary</h2>
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>$890</span>
+            <span>Rs. {subtotal.toLocaleString()}</span>
           </div>
           <div className="summary-row">
             <span>Shipping</span>
@@ -61,7 +91,7 @@ export default function Cart() {
           </div>
           <div className="summary-row total">
             <span>Total</span>
-            <span className="price">$890</span>
+            <span className="price">Rs. {subtotal.toLocaleString()}</span>
           </div>
           <Link to="/checkout" className="btn-primary checkout-btn">Proceed to Checkout</Link>
           <p className="secure-checkout-text">Secure Checkout. 30-Day Returns.</p>

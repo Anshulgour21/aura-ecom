@@ -17,25 +17,48 @@
   .ui-search-content {
     position: relative;
     z-index: 2;
-    padding-top: var(--spacing-8);
+    padding: var(--spacing-4);
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .search-overlay-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--color-white);
+    border: 1px solid rgba(23, 22, 22, 0.1);
+    border-radius: 12px;
+    padding: var(--spacing-6);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
   }
 
   .ui-search-header {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: var(--spacing-16);
+    margin-bottom: var(--spacing-6);
   }
 
   .ui-search-input-wrapper {
     display: flex;
     align-items: center;
     gap: var(--spacing-4);
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 1px solid rgba(23, 22, 22, 0.1);
     padding-bottom: var(--spacing-4);
-    margin-bottom: var(--spacing-12);
+    margin-bottom: var(--spacing-8);
+    transition: border-color 0.3s ease;
   }
 
-  .ui-search-input-wrapper .search-icon {
+  .ui-search-input-wrapper:focus-within {
+    border-bottom-color: var(--color-primary);
+  }
+
+  .search-icon {
+    color: rgba(23, 22, 22, 0.4);
+    transition: color 0.3s ease;
+  }
+
+  .ui-search-input-wrapper:focus-within .search-icon {
     color: var(--color-primary);
   }
 
@@ -43,53 +66,105 @@
     flex: 1;
     background: transparent;
     border: none;
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-family: var(--font-body);
+    font-size: 1.25rem;
     color: var(--color-primary);
     outline: none;
     padding: 0;
   }
 
   .ui-search-input::placeholder {
-    color: rgba(23, 22, 22, 0.2);
+    color: rgba(23, 22, 22, 0.3);
   }
 
-  .ui-search-suggestions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-12);
+  .ui-search-results-area {
+    min-height: 200px;
   }
 
-  .suggestion-group h3 {
+  /* Trending Section */
+  .ui-search-trending h3,
+  .results-heading {
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: rgba(23, 22, 22, 0.5);
     margin-bottom: var(--spacing-6);
   }
 
-  .suggestion-group ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .trending-grid {
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-4);
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
   }
 
-  .suggestion-group button {
-    background: none;
-    border: none;
+  .trending-tag {
+    background: rgba(23, 22, 22, 0.03);
+    border: 1px solid rgba(23, 22, 22, 0.05);
+    border-radius: 40px;
+    padding: 8px 16px;
     font-family: var(--font-body);
-    font-size: 1.5rem;
+    font-size: 0.875rem;
     color: var(--color-primary);
     cursor: pointer;
-    padding: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.2s ease;
   }
 
-  .suggestion-group button:hover {
-    opacity: 0.5;
+  .trending-tag:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  /* Results Section */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .no-results {
+    text-align: center;
+    padding: var(--spacing-12) 0;
+    color: rgba(23, 22, 22, 0.6);
+  }
+
+  .no-results p {
+    margin-bottom: var(--spacing-6);
+    font-size: 1.125rem;
+  }
+
+  /* Responsive Adjustments */
+  @media (min-width: 768px) {
+    .ui-search-content {
+      padding-top: 80px;
+    }
+    
+    .search-overlay-container {
+      padding: var(--spacing-8);
+    }
+
+    .ui-search-input {
+      font-size: 1.5rem;
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .results-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-8);
+    }
+  }
+
+  /* Mobile Overrides */
+  .mobile-search .search-overlay-container {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: var(--spacing-4);
   }
 }

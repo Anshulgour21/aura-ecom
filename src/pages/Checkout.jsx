@@ -72,12 +72,12 @@ export default function Checkout() {
            <h2>Order Summary</h2>
            <div className="summary-item">
              <span className="summary-item-name">1x Ethereal Chain Bracelet</span>
-             <span className="price">$890</span>
+             <span className="price">Rs. 890</span>
            </div>
            <div className="summary-divider"></div>
            <div className="summary-row">
              <span>Subtotal</span>
-             <span>$890</span>
+             <span>Rs. 890</span>
            </div>
            <div className="summary-row">
              <span>Shipping</span>
@@ -85,7 +85,7 @@ export default function Checkout() {
            </div>
            <div className="summary-row total">
              <span>Total</span>
-             <span className="price">$890</span>
+             <span className="price">Rs. 890</span>
            </div>
         </div>
       </motion.div>

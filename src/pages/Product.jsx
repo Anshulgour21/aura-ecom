@@ -8,8 +8,8 @@ import SwipeGallery from '../components/ui/SwipeGallery';
 import StickyActionBar from '../components/ui/StickyActionBar';
 import FadeIn from '../components/animations/FadeIn';
 
-import ringImg from '../assets/ring.png';
-import necklaceImg from '../assets/necklace.png';
+import { useStore } from '../context/StoreContext';
+import { getProductById } from '../data/products';
 
 import './Product.css';
 
@@ -24,7 +24,27 @@ export default function Product() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const productImages = [ringImg, necklaceImg, ringImg];
+  const product = getProductById(id);
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+
+  if (!product) {
+    return <div className="product-page"><div className="container" style={{paddingTop: '120px'}}><h2>Product not found</h2></div></div>;
+  }
+
+  const productImages = [product.img1, product.img2].filter(Boolean);
+  const isWishlisted = isInWishlist(product.id);
+
+  const handleWishlist = () => {
+    if (isWishlisted) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
 
   return (
     <div className="product-page">
@@ -32,11 +52,11 @@ export default function Product() {
         {/* Gallery */}
         <div className="product-gallery">
           {isMobile ? (
-            <SwipeGallery images={productImages} altText="Solitaire Ring" />
+            <SwipeGallery images={productImages} altText={product.name} />
           ) : (
             <div className="desktop-gallery-grid">
               {productImages.map((src, i) => (
-                <img key={i} src={src} alt={`Solitaire Ring ${i + 1}`} />
+                <img key={i} src={src} alt={`${product.name} ${i + 1}`} />
               ))}
             </div>
           )}
@@ -46,8 +66,8 @@ export default function Product() {
         <div className="product-details">
           <div className="product-details-sticky">
             <FadeIn slide>
-              <h1 className="product-title">Solitaire Minimalist Ring</h1>
-              <p className="product-price">$1,250</p>
+              <h1 className="product-title">{product.name}</h1>
+              <p className="product-price">{product.price}</p>
               
               <div className="product-description">
                 <p>A masterclass in restraint. The Solitaire Minimalist Ring features a brilliant-cut diamond suspended elegantly on an ultra-thin 18k solid gold band.</p>
@@ -78,9 +98,9 @@ export default function Product() {
               </div>
 
               <div className="product-actions desktop-only">
-                <Button variant="primary" style={{ width: '100%' }}>Add to Cart</Button>
-                <Button variant="secondary" style={{ width: '100%', marginTop: '8px' }}>
-                  <Heart size={18} /> Add to Wishlist
+                <Button variant="primary" style={{ width: '100%' }} onClick={handleAddToCart}>Add to Cart</Button>
+                <Button variant="secondary" style={{ width: '100%', marginTop: '8px' }} onClick={handleWishlist}>
+                  <Heart size={18} fill={isWishlisted ? 'currentColor' : 'none'} /> {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 </Button>
               </div>
 
@@ -99,7 +119,7 @@ export default function Product() {
         </div>
       </div>
 
-      <StickyActionBar price="$1,250" onAddToCart={() => console.log('Added to cart')} />
+      <StickyActionBar price={product.price} onAddToCart={handleAddToCart} />
     </div>
   );
 }
